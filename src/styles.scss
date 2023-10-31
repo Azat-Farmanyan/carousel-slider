@@ -1,1 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("./null.scss");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+body {
+  font-family: "Inter", sans-serif;
+  color: #fff;
+}
+
+.wrapper {
+  padding: 0 30px;
+  @media only screen and (max-width: 768px) {
+    padding: 0 60px;
+  }
+
+  @media only screen and (max-width: 389px) {
+    padding: 0 20px;
+  }
+}
