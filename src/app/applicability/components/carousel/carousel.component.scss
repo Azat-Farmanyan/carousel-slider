@@ -11,10 +11,12 @@
   max-width: 1223px;
   max-width: 846px;
   max-height: 437px;
-  position: relative;
+
+  height: 100vh;
 
   left: 50%;
   transform: translate(-50%);
+  position: relative;
 
   .slide {
     display: none; // Hide all slides by default
@@ -32,23 +34,20 @@
       top: 0;
 
       width: 100%;
-      // transform: translate(-50%, -50%);
-      // top: 50%;
-      // left: 50%;
     }
+
     // back
     &:nth-child(1),
     &:nth-child(5) {
       border: 5px solid red;
       z-index: 8;
-
-      // top: 50%;
+      top: 80px;
     }
     &:nth-child(1) {
-      left: -90px;
+      left: -160px;
     }
     &:nth-child(5) {
-      right: -90px;
+      right: -160px;
     }
 
     // center
@@ -56,25 +55,19 @@
     &:nth-child(4) {
       border: 5px solid yellow;
       z-index: 9;
-      // top: 50%;
-
-      // width: 355px;
-      // left: 50%;
-      // transform: translate(-50%);
+      top: 40px;
     }
     &:nth-child(2) {
-      left: -70px;
+      left: -90px;
     }
     &:nth-child(4) {
-      right: -70px;
+      right: -90px;
     }
 
     // front
     &:nth-child(3) {
       border: 5px solid green;
       z-index: 10;
-      // width: 846px;
-      // width: 846px;
       left: 50%;
       transform: translate(-50%);
     }

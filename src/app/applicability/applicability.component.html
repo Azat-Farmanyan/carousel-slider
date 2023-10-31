@@ -11,12 +11,12 @@
     <h1 class='title'>применимость</h1>
 
     <nav class="nav">
-      <app-nav-item *ngFor="let nav of groups" [title]="nav.title" [isActive]="activeCategory === nav.title"
+      <app-nav-item *ngFor="let navItem of nav" [title]="navItem" [isActive]="activeCategory === navItem"
         (onClick)="setCategory($event)">
       </app-nav-item>
     </nav>
 
-    <app-carousel [activeCategory]="activeCategory" [currentCategoryItems]="currentCategoryItems"></app-carousel>
+    <app-carousel [activeCategory]="activeCategory" [categoryItems]="categoryItems" [nav]="nav"></app-carousel>
 
   </div>
 </section>

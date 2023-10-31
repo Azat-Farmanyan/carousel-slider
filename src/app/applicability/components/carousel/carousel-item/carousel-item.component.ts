@@ -8,4 +8,6 @@ import { CategoryItem } from 'src/app/applicability/data';
 })
 export class CarouselItemComponent {
   @Input({ required: true }) slideContent: CategoryItem;
+
+  @Input({ required: true }) height: string = '437px';
 }

@@ -1,6 +1,9 @@
 .slide {
   display: inline-block;
   width: 100%;
+  overflow: hidden;
+
+  height: inherit;
   .slide-body {
     display: flex;
     align-items: center;
@@ -59,7 +62,8 @@
     }
     .image img {
       max-height: 388px;
-      // height: 100%;
+      height: 100%;
+      width: auto;
     }
   }
 }
