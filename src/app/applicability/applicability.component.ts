@@ -17,7 +17,7 @@ export class ApplicabilityComponent implements OnInit {
     this.setCategory(this.activeCategory);
     this.groups.forEach((el) => {
       // console.log(el.items);
-      this.categoryItems = this.categoryItems.concat(el.items);
+      // this.categoryItems = this.categoryItems.concat(el.items);
       this.nav.push(el.title);
     });
 
@@ -29,9 +29,9 @@ export class ApplicabilityComponent implements OnInit {
     console.log('set category: ', groupName);
 
     this.activeCategory = groupName;
-    // this.categoryItems = this.groups.filter(
-    //   (el) => el.title === this.activeCategory
-    // )[0].items;
+    this.categoryItems = this.groups.filter(
+      (el) => el.title === this.activeCategory
+    )[0].items;
 
     // this.groups.forEach((el) => {
     //   console.log(el.items);

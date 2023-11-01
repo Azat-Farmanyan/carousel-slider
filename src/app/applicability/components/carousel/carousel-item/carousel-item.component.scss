@@ -4,6 +4,8 @@
   overflow: hidden;
 
   height: inherit;
+
+  transition: transform 300ms ease-in-out;
   .slide-body {
     display: flex;
     align-items: center;
@@ -39,7 +41,11 @@
       }
       .button-default {
         border-radius: 8px;
-        background: linear-gradient(180deg, rgba(243, 238, 255, 0) 0%, rgba(243, 238, 255, 0.04) 100%),
+        background: linear-gradient(
+            180deg,
+            rgba(243, 238, 255, 0) 0%,
+            rgba(243, 238, 255, 0.04) 100%
+          ),
           rgba(147, 130, 255, 0.01);
         box-shadow: 0px 0px 12px 0px rgba(255, 255, 255, 0.08) inset;
         padding: 8px 25px;

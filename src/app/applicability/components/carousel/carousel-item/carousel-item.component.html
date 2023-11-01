@@ -1,15 +1,13 @@
 <div class="slide" [style.height]="height">
   <div class="slide-body">
     <div class="slide-text-content">
-      <h2 class='title'>{{slideContent.title}}</h2>
-      <p class='text' *ngFor="let text of slideContent.items">{{text}}</p>
+      <h2 class="title">{{ slideContent.title }}</h2>
+      <p class="text" *ngFor="let text of slideContent.items">{{ text }}</p>
 
-      <button class="button-default">
-        Подробнее
-      </button>
+      <button class="button-default">Подробнее</button>
     </div>
     <div class="image">
-      <img [src]="slideContent.phoneImgUrl" [alt]="slideContent.title">
+      <img [src]="slideContent.phoneImgUrl" [alt]="slideContent.title" />
     </div>
   </div>
 </div>

@@ -1,5 +1,10 @@
 <div class="carousel">
-  <app-carousel-item (click)='slideClick(i)' class="slide" *ngFor="let item of categoryItems, let i = index"
-    [slideContent]='item' [height]="getHeight(i)">
+  <app-carousel-item
+    (click)="slideClick(i)"
+    class="slide"
+    *ngFor="let item of categoryItems; let i = index"
+    [slideContent]="item"
+    [height]="getHeight(i)"
+  >
   </app-carousel-item>
 </div>
