@@ -33,11 +33,17 @@ export class CarouselComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.getCurrentCategoryItems();
-    this.startAutoSlide(true);
+    // this.startAutoSlide(false);
+    // this.startAutoSlide(true);
     // this.slideClick(0);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.clickedSlideIndex = 3;
+    this.activeTab = 2;
+    this.startAutoSlide(false);
+    this.startAutoSlide(true);
+
     // this.slideClick(0);
     // console.log(this.getCurrentItemsIndex(this.activeCategory));
   }
