@@ -21,8 +21,8 @@ export class ApplicabilityComponent implements OnInit {
       this.nav.push(el.title);
     });
 
-    console.log(this.categoryItems);
-    console.log(this.nav);
+    // console.log(this.categoryItems);
+    // console.log(this.nav);
   }
 
   setCategory(groupName: string) {
@@ -38,7 +38,7 @@ export class ApplicabilityComponent implements OnInit {
     //   this.categoryItems = this.categoryItems.concat(el.items);
     // });
 
-    console.log(this.categoryItems);
+    // console.log(this.categoryItems);
   }
 
   get activeBackground() {
