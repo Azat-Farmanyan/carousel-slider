@@ -1,4 +1,8 @@
-<div class="carousel">
+<div
+  class="carousel"
+  (mouseenter)="startAutoSlide(false)"
+  (mouseleave)="startAutoSlide(true)"
+>
   <app-carousel-item
     (click)="slideClick(i)"
     class="slide"

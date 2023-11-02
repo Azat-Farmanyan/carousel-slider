@@ -13,6 +13,7 @@ import {
   style,
   transition,
   animate,
+  group,
 } from '@angular/animations';
 
 @Component({
@@ -25,17 +26,19 @@ export class CarouselComponent implements OnInit, OnChanges {
   @Input({ required: true }) nav: string[] = [];
   @Input({ required: true }) categoryItems: CategoryItem[] = [];
   public groups = DATA;
-  activeTab: number = 0;
+  activeTab: number = 2;
   paginationTabs: number[] = [0, 1, 2, 3, 4];
-  initialArray: CategoryItem[] = [];
+  private autoSlideInterval: any;
+  clickedSlideIndex: number = 3;
 
   ngOnInit(): void {
     this.getCurrentCategoryItems();
+    this.startAutoSlide(true);
+    // this.slideClick(0);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.slideClick(0);
-    this.initialArray = this.categoryItems;
+    // this.slideClick(0);
     // console.log(this.getCurrentItemsIndex(this.activeCategory));
   }
 
@@ -44,33 +47,66 @@ export class CarouselComponent implements OnInit, OnChanges {
     else if (i === 1 || i == 3) return '357px';
     return '437px';
   }
-
+  goLeft() {
+    if (this.activeTab <= 3) this.activeTab++;
+    else this.activeTab = 0;
+  }
+  goRight() {
+    if (this.activeTab >= 1) this.activeTab--;
+    else this.activeTab = 4;
+  }
   slideClick(clickedSlideIndex: number) {
-    console.log(clickedSlideIndex);
+    console.log('slide clicked', clickedSlideIndex);
 
-    this.activeTab = clickedSlideIndex;
+    // this.activeTab = clickedSlideIndex;
 
     if (clickedSlideIndex === 1) {
+      // go 1 step to right
       const lastItem = this.categoryItems.pop();
       if (lastItem) this.categoryItems.unshift(lastItem);
+      this.goRight();
     }
 
     if (clickedSlideIndex === 0) {
+      // go 2 step to right
       const lastTwoItems = this.categoryItems.splice(
         this.categoryItems.length - 2,
         2
-      ); // Remove the last two items
-      this.categoryItems.unshift(...lastTwoItems); // Add them to the beginning
+      );
+      this.categoryItems.unshift(...lastTwoItems);
+
+      this.goRight();
+      this.goRight();
     }
     if (clickedSlideIndex === 3) {
-      const firstItem = this.categoryItems.shift(); // Remove the first item
+      // go 1 step to left
+      const firstItem = this.categoryItems.shift();
       if (firstItem) this.categoryItems.push(firstItem);
+      this.goLeft();
     }
 
     if (clickedSlideIndex === 4) {
-      const firstTwoItems = this.categoryItems.splice(0, 2); // Remove the first two items
-      this.categoryItems.push(...firstTwoItems); // Add them to the end
+      const firstTwoItems = this.categoryItems.splice(0, 2);
+      this.categoryItems.push(...firstTwoItems);
+      this.goLeft();
+      this.goLeft();
     }
+
+    // console.log(
+    //   'getThirdItemIndex: ',
+    //   this.getThirdItemIndex(this.categoryItems[2])
+    // );
+  }
+
+  getThirdItemIndex(thirdItem: CategoryItem) {
+    console.log(this.activeCategory);
+
+    const activeItems = this.groups.filter(
+      (group) => group.title === this.activeCategory
+    );
+    console.log('activeItems: ', activeItems[0].items);
+
+    return activeItems[0].items.indexOf(thirdItem);
   }
 
   getCurrentCategoryItems() {
@@ -92,5 +128,24 @@ export class CarouselComponent implements OnInit, OnChanges {
     const end = lastSlideIndex * slideCount;
 
     return [start, end];
+  }
+
+  startAutoSlide(allow: boolean) {
+    if (allow) {
+      console.log('start interval');
+
+      this.autoSlideInterval = setInterval(() => {
+        // this.clickedSlideIndex++;
+        // if (this.clickedSlideIndex <= 4) this.clickedSlideIndex++;
+        // else this.clickedSlideIndex = 0;
+
+        this.slideClick(3);
+        // this.goLeft();
+      }, 3000);
+    } else {
+      console.log('stop interval');
+
+      clearInterval(this.autoSlideInterval);
+    }
   }
 }
