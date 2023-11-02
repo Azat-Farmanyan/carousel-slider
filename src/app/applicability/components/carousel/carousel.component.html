@@ -7,4 +7,11 @@
     [height]="getHeight(i)"
   >
   </app-carousel-item>
+
+  <app-pagination
+    class="pagination"
+    [activeTab]="activeTab"
+    [tabs]="paginationTabs"
+    (onClickPagination)="slideClick($event)"
+  ></app-pagination>
 </div>

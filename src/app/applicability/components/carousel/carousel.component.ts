@@ -25,13 +25,18 @@ export class CarouselComponent implements OnInit, OnChanges {
   @Input({ required: true }) nav: string[] = [];
   @Input({ required: true }) categoryItems: CategoryItem[] = [];
   public groups = DATA;
+  activeTab: number = 0;
+  paginationTabs: number[] = [0, 1, 2, 3, 4];
+  initialArray: CategoryItem[] = [];
 
   ngOnInit(): void {
     this.getCurrentCategoryItems();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.getCurrentItemsIndex(this.activeCategory));
+    this.slideClick(0);
+    this.initialArray = this.categoryItems;
+    // console.log(this.getCurrentItemsIndex(this.activeCategory));
   }
 
   getHeight(i: number) {
@@ -41,11 +46,9 @@ export class CarouselComponent implements OnInit, OnChanges {
   }
 
   slideClick(clickedSlideIndex: number) {
-    const firstElem = this.categoryItems[0];
-    const secondElem = this.categoryItems[4];
-    const forthElem = this.categoryItems[0];
-    const fifthElem = this.categoryItems[4];
     console.log(clickedSlideIndex);
+
+    this.activeTab = clickedSlideIndex;
 
     if (clickedSlideIndex === 1) {
       const lastItem = this.categoryItems.pop();

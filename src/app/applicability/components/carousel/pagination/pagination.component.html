@@ -1,0 +1,8 @@
+<div class="pagination">
+  <div
+    *ngFor="let tab of tabs"
+    class="pagination-item"
+    [ngClass]="{ 'active-tab': activeTab === tab }"
+    (click)="onClickPagination.emit(tab)"
+  ></div>
+</div>
