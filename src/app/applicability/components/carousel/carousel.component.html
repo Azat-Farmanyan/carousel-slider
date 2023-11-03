@@ -1,21 +1,8 @@
-<div
-  class="carousel"
-  (mouseenter)="startAutoSlide(false)"
-  (mouseleave)="startAutoSlide(true)"
->
-  <app-carousel-item
-    (click)="slideClick(i)"
-    class="slide"
-    *ngFor="let item of categoryItems; let i = index"
-    [slideContent]="item"
-    [height]="getHeight(i)"
-  >
+<div class="carousel" (mouseenter)="startAutoSlide(false)" (mouseleave)="startAutoSlide(true)">
+  <app-carousel-item (click)="slideClick(i)" class="slide" *ngFor="let item of categoryItems; let i = index"
+    [slideContent]="item" [height]="getHeight(i)">
   </app-carousel-item>
 
-  <app-pagination
-    class="pagination"
-    [activeTab]="activeTab"
-    [tabs]="paginationTabs"
-    (onClickPagination)="slideClick($event)"
-  ></app-pagination>
+  <app-pagination class="pagination" [activeTab]="activeTab" [tabs]="paginationTabs"></app-pagination>
+  <!-- (onClickPagination)="slideClick($event)" -->
 </div>

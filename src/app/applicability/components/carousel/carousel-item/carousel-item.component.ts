@@ -5,7 +5,7 @@ import {
   transition,
   animate,
 } from '@angular/animations';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CategoryItem } from 'src/app/applicability/data';
 
 @Component({
@@ -21,8 +21,12 @@ import { CategoryItem } from 'src/app/applicability/data';
     ]),
   ],
 })
-export class CarouselItemComponent {
+export class CarouselItemComponent implements OnChanges {
   @Input({ required: true }) slideContent: CategoryItem;
 
   @Input({ required: true }) height: string = '437px';
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // console.log(this.slideContent);
+  }
 }

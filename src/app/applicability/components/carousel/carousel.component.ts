@@ -2,11 +2,12 @@ import {
   Component,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChanges,
 } from '@angular/core';
 import { CategoryItem, DATA, DataItem } from '../../data';
-import { last } from 'rxjs';
+import { Observable, Subscription, last } from 'rxjs';
 import {
   trigger,
   state,
@@ -21,35 +22,63 @@ import {
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.scss'],
 })
-export class CarouselComponent implements OnInit, OnChanges {
+export class CarouselComponent implements OnInit, OnChanges, OnDestroy {
   @Input({ required: true }) activeCategory: string = '';
   @Input({ required: true }) nav: string[] = [];
   @Input({ required: true }) categoryItems: CategoryItem[] = [];
+
   public groups = DATA;
-  activeTab: number = 2;
-  paginationTabs: number[] = [0, 1, 2, 3, 4];
   private autoSlideInterval: any;
+
+  activeTab: number = 0;
+  paginationTabs: number[] = [0, 1, 2, 3, 4];
+
   clickedSlideIndex: number = 3;
 
   ngOnInit(): void {
-    this.getCurrentCategoryItems();
+    // this.getCurrentCategoryItems();
     // this.startAutoSlide(false);
     // this.startAutoSlide(true);
     // this.slideClick(0);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
+    // console.log('ngOnChanges: ', changes['categoryItems'].currentValue);
+    console.log('carousel get new items ----------');
 
-    this.clickedSlideIndex = 3;
-    this.activeTab = 2;
+    clearInterval(this.autoSlideInterval);
+
+    // this.categoryItems = changes['categoryItems'].currentValue;
+    console.log(this.categoryItems);
+
+    // this.clickedSlideIndex = 3;
+
     this.startAutoSlide(false);
-    setTimeout(() => {
-      this.startAutoSlide(true);
-    }, 0);
+    this.startAutoSlide(true);
 
-    // this.slideClick(0);
-    // console.log(this.getCurrentItemsIndex(this.activeCategory));
+    this.slideClick(0);
+    console.log(this.categoryItems[2]);
+
+    this.activeTab = 0;
+
+    if (this.categoryItems[2].id === 2) {
+      console.log('2');
+      this.slideClick(1, true);
+    }
+    if (this.categoryItems[2].id === 3) {
+      console.log('3');
+
+      this.slideClick(0, true);
+    }
+    if (this.categoryItems[2].id === 4) {
+      console.log('4');
+
+      this.slideClick(4, true);
+    }
+    if (this.categoryItems[2].id === 5) {
+      console.log('5');
+      this.slideClick(3, true);
+    }
   }
 
   getHeight(i: number) {
@@ -57,27 +86,23 @@ export class CarouselComponent implements OnInit, OnChanges {
     else if (i === 1 || i == 3) return '357px';
     return '437px';
   }
-  goLeft() {
+
+  goLeft(fromPagination: boolean) {
+    if (fromPagination) return;
+
     if (this.activeTab <= 3) this.activeTab++;
     else this.activeTab = 0;
   }
-  goRight() {
+  goRight(fromPagination: boolean) {
+    if (fromPagination) return;
     if (this.activeTab >= 1) this.activeTab--;
     else this.activeTab = 4;
   }
-  slideClick(clickedSlideIndex: number) {
+
+  slideClick(clickedSlideIndex: number, fromPagination: boolean = false) {
     console.log('slide clicked', clickedSlideIndex);
 
-    // this.activeTab = clickedSlideIndex;
-
-    if (clickedSlideIndex === 1) {
-      // go 1 step to right
-      const lastItem = this.categoryItems.pop();
-      if (lastItem) this.categoryItems.unshift(lastItem);
-      this.goRight();
-    }
-
-    if (clickedSlideIndex === 0) {
+    const showFirstSlide = () => {
       // go 2 step to right
       const lastTwoItems = this.categoryItems.splice(
         this.categoryItems.length - 2,
@@ -85,77 +110,77 @@ export class CarouselComponent implements OnInit, OnChanges {
       );
       this.categoryItems.unshift(...lastTwoItems);
 
-      this.goRight();
-      this.goRight();
-    }
-    if (clickedSlideIndex === 3) {
+      this.goRight(fromPagination);
+      this.goRight(fromPagination);
+    };
+    const showSecondSlide = () => {
+      // go 1 step to right
+      const lastItem = this.categoryItems.pop();
+      if (lastItem) this.categoryItems.unshift(lastItem);
+
+      this.goRight(fromPagination);
+    };
+    const showForthSlide = () => {
       // go 1 step to left
       const firstItem = this.categoryItems.shift();
       if (firstItem) this.categoryItems.push(firstItem);
-      this.goLeft();
-    }
-
-    if (clickedSlideIndex === 4) {
+      this.goLeft(fromPagination);
+    };
+    const showFifthSlide = () => {
       const firstTwoItems = this.categoryItems.splice(0, 2);
       this.categoryItems.push(...firstTwoItems);
-      this.goLeft();
-      this.goLeft();
+      this.goLeft(fromPagination);
+      this.goLeft(fromPagination);
+    };
+
+    if (fromPagination) {
+      console.log('from pagination: ', clickedSlideIndex);
+
+      // this.activeTab = clickedSlideIndex;
+
+      // console.log(this.categoryItems);
+
+      // if(clickedSlideIndex===0)
     }
 
-    // console.log(
-    //   'getThirdItemIndex: ',
-    //   this.getThirdItemIndex(this.categoryItems[2])
-    // );
-  }
+    // this.activeTab = clickedSlideIndex;
 
-  getThirdItemIndex(thirdItem: CategoryItem) {
-    console.log(this.activeCategory);
+    if (clickedSlideIndex === 0) showFirstSlide();
 
-    const activeItems = this.groups.filter(
-      (group) => group.title === this.activeCategory
-    );
-    console.log('activeItems: ', activeItems[0].items);
+    if (clickedSlideIndex === 1) showSecondSlide();
 
-    return activeItems[0].items.indexOf(thirdItem);
+    if (clickedSlideIndex === 3) showForthSlide();
+
+    if (clickedSlideIndex === 4) showFifthSlide();
   }
 
   getCurrentCategoryItems() {
-    console.log(this.categoryItems);
-  }
-
-  getCurrentItemsIndex(category: string) {
-    const firstSlideIndex = this.nav.indexOf(category);
-
-    if (firstSlideIndex === -1) {
-      console.log(`${category} not found in the array`);
-      return null; // Or any other value to indicate not found
-    }
-
-    const slideCount = 5; // Number of slides in each range
-    const lastSlideIndex = firstSlideIndex + slideCount - 1;
-
-    const start = firstSlideIndex * slideCount;
-    const end = lastSlideIndex * slideCount;
-
-    return [start, end];
+    // console.log(this.categoryItems);
   }
 
   startAutoSlide(allow: boolean) {
-    if (allow) {
-      console.log('start interval');
+    // return;
+    // console.log('start interval');
 
+    if (allow) {
       this.autoSlideInterval = setInterval(() => {
         // this.clickedSlideIndex++;
         // if (this.clickedSlideIndex <= 4) this.clickedSlideIndex++;
         // else this.clickedSlideIndex = 0;
 
         this.slideClick(3);
+        console.log('next: ', this.activeTab);
+
+        // console.log(this.categoryItems);
+
         // this.goLeft();
       }, 3000);
     } else {
-      console.log('stop interval');
+      // console.log('stop interval');
 
       clearInterval(this.autoSlideInterval);
     }
   }
+
+  ngOnDestroy() {}
 }
