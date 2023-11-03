@@ -1,9 +1,11 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 import { CategoryItem, DATA, DataItem } from '../../data';
@@ -27,6 +29,8 @@ export class CarouselComponent implements OnInit, OnChanges, OnDestroy {
   @Input({ required: true }) nav: string[] = [];
   @Input({ required: true }) categoryItems: CategoryItem[] = [];
 
+  @Output() getBackground = new EventEmitter();
+
   public groups = DATA;
   private autoSlideInterval: any;
 
@@ -44,7 +48,7 @@ export class CarouselComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     // console.log('ngOnChanges: ', changes['categoryItems'].currentValue);
-    console.log('carousel get new items ----------');
+    // console.log('carousel get new items ----------');
 
     clearInterval(this.autoSlideInterval);
 
@@ -57,26 +61,26 @@ export class CarouselComponent implements OnInit, OnChanges, OnDestroy {
     this.startAutoSlide(true);
 
     this.slideClick(0);
-    console.log(this.categoryItems[2]);
+    // console.log(this.categoryItems[2]);
 
     this.activeTab = 0;
 
     if (this.categoryItems[2].id === 2) {
-      console.log('2');
+      // console.log('2');
       this.slideClick(1, true);
     }
     if (this.categoryItems[2].id === 3) {
-      console.log('3');
+      // console.log('3');
 
       this.slideClick(0, true);
     }
     if (this.categoryItems[2].id === 4) {
-      console.log('4');
+      // console.log('4');
 
       this.slideClick(4, true);
     }
     if (this.categoryItems[2].id === 5) {
-      console.log('5');
+      // console.log('5');
       this.slideClick(3, true);
     }
   }
@@ -100,7 +104,7 @@ export class CarouselComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   slideClick(clickedSlideIndex: number, fromPagination: boolean = false) {
-    console.log('slide clicked', clickedSlideIndex);
+    // console.log('slide clicked', clickedSlideIndex);
 
     const showFirstSlide = () => {
       // go 2 step to right
@@ -133,16 +137,6 @@ export class CarouselComponent implements OnInit, OnChanges, OnDestroy {
       this.goLeft(fromPagination);
     };
 
-    if (fromPagination) {
-      console.log('from pagination: ', clickedSlideIndex);
-
-      // this.activeTab = clickedSlideIndex;
-
-      // console.log(this.categoryItems);
-
-      // if(clickedSlideIndex===0)
-    }
-
     // this.activeTab = clickedSlideIndex;
 
     if (clickedSlideIndex === 0) showFirstSlide();
@@ -152,6 +146,8 @@ export class CarouselComponent implements OnInit, OnChanges, OnDestroy {
     if (clickedSlideIndex === 3) showForthSlide();
 
     if (clickedSlideIndex === 4) showFifthSlide();
+
+    this.getBackground.emit(this.categoryItems[2]);
   }
 
   getCurrentCategoryItems() {
@@ -169,7 +165,7 @@ export class CarouselComponent implements OnInit, OnChanges, OnDestroy {
         // else this.clickedSlideIndex = 0;
 
         this.slideClick(3);
-        console.log('next: ', this.activeTab);
+        // console.log('next: ', this.activeTab);
 
         // console.log(this.categoryItems);
 

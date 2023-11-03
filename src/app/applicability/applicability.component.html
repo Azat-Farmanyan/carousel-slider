@@ -1,6 +1,4 @@
-<section class="applicability"
-  [style.background]="'linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url(' + '../../assets/images/bg/bg-1.jpeg' + ') lightgray 50% / cover no-repeat'"
-  style='background: rgba(255, 255, 255, 0.00)'>
+<section class="applicability" [style.background]="getActiveBackground()" style='background: rgba(255, 255, 255, 0.00)'>
 
   <img class='wave' src="../../assets/images/bg/wave.gif" alt="wave">
 
@@ -16,7 +14,8 @@
       </app-nav-item>
     </nav>
 
-    <app-carousel [activeCategory]="activeCategory" [categoryItems]="categoryItems" [nav]="nav"></app-carousel>
+    <app-carousel (getBackground)="getActiveSlide($event)" [activeCategory]="activeCategory"
+      [categoryItems]="categoryItems" [nav]="nav"></app-carousel>
 
   </div>
 </section>
