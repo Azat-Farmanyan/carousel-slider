@@ -60,7 +60,7 @@ export class CarouselComponent implements OnInit, OnChanges, OnDestroy {
     this.startAutoSlide(false);
     this.startAutoSlide(true);
 
-    this.slideClick(0);
+    // this.slideClick(0);
     // console.log(this.categoryItems[2]);
 
     this.activeTab = 0;

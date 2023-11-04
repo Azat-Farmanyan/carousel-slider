@@ -1,21 +1,36 @@
-<section class="applicability" [style.background]="getActiveBackground()" style='background: rgba(255, 255, 255, 0.00)'>
+<section
+  class="applicability"
+  [style.background]="
+    'linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(' +
+    '../../assets/images/bg/' +
+    activeBackground +
+    ') lightgray 50% / cover no-repeat'
+  "
+  style="background: rgba(255, 255, 255, 0)"
+  [@backgroundFade]
+>
+  <!-- style="background: rgba(255, 255, 255, 0)" -->
 
-  <img class='wave' src="../../assets/images/bg/wave.gif" alt="wave">
-
-
+  <img class="wave" src="../../assets/images/bg/wave.gif" alt="wave" />
 
   <div class="applicability-body wrapper">
-
-    <h1 class='title'>применимость</h1>
+    <h1 class="title">применимость</h1>
 
     <nav class="nav">
-      <app-nav-item *ngFor="let navItem of nav" [title]="navItem" [isActive]="activeCategory === navItem"
-        (onClick)="setCategory($event)">
+      <app-nav-item
+        *ngFor="let navItem of nav"
+        [title]="navItem"
+        [isActive]="activeCategory === navItem"
+        (onClick)="setCategory($event)"
+      >
       </app-nav-item>
     </nav>
 
-    <app-carousel (getBackground)="getActiveSlide($event)" [activeCategory]="activeCategory"
-      [categoryItems]="categoryItems" [nav]="nav"></app-carousel>
-
+    <app-carousel
+      (getBackground)="getActiveSlide($event)"
+      [activeCategory]="activeCategory"
+      [categoryItems]="categoryItems"
+      [nav]="nav"
+    ></app-carousel>
   </div>
 </section>
